@@ -51,16 +51,16 @@ class HW2:
         # Do not change this return statement
         return default_solution, manhattan_solution
 
-    def problem_2b(self,searcher=None,heuristic=None):
+    def problem_2b(self):
         '''
         problem 2b - Use different start state
         1.  A* with 8-Puzzle and different heuristics (default and manhattan)
         2.  Return the solution and print the result using same start state
         3.  Answer the question for this problem in your HW2_YourName.pdf
         '''
-        eight_puzzle = EightPuzzle(initial=(1, 0, 3, 4, 6, 8, 2, 7, 5),goal=(1, 2, 3, 4, 5, 6, 7, 8, 0))
-        default_solution = searcher(eight_puzzle).solution()
-        manhattan_solution = searcher(eight_puzzle,heuristic).solution()
+        eight_puzzle = EightPuzzle(initial=(1, 0, 3, 4, 6, 8, 2, 7, 5))
+        default_solution = astar_search(eight_puzzle).solution()
+        manhattan_solution = astar_search(eight_puzzle,self.manhattan).solution()
 
         # Do not change this return statement
         return default_solution, manhattan_solution
@@ -81,8 +81,8 @@ class HW2:
         results1 = []
         results2 = []
         for search in search_algos:
-            results1.append(search(r_graph1))
-            results2.append(search(r_graph2))
+            results1.append(search(r_graph1).path())
+            results2.append(search(r_graph2).path())
         # Do not change this return statement
         return results1, results2
 
