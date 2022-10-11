@@ -34,7 +34,7 @@ class HW2:
         eight_puzzle = EightPuzzle(initial=(2, 1, 3, 4, 0, 6, 5, 7, 8),goal=(1, 2, 3, 4, 0, 5, 6, 7, 8))
         return astar_search(eight_puzzle).solution()
 
-    def problem_2a(self, eight_puzzle, searcher,heuristic):
+    def problem_2a(self):
         '''
         problem 2a - Example of code with question to answer in homework
         1.  A* with 8-Puzzle and different heuristics (default and manhattan)
@@ -42,13 +42,16 @@ class HW2:
             and goal.
         3.  Answer the question for this problem in your HW2_YourName.pdf
         '''
-        default_solution = searcher(eight_puzzle).solution()
-        manhattan_solution = searcher(eight_puzzle,heuristic).solution()
+
+        puzzle = EightPuzzle((2, 4, 3, 1, 5, 6, 7, 8, 0))
+
+        default_solution = astar_search(puzzle).solution()
+        manhattan_solution = astar_search(puzzle,self.manhattan).solution()
 
         # Do not change this return statement
         return default_solution, manhattan_solution
 
-    def problem_2b(self, searcher,heuristic):
+    def problem_2b(self,searcher=None,heuristic=None):
         '''
         problem 2b - Use different start state
         1.  A* with 8-Puzzle and different heuristics (default and manhattan)
@@ -71,13 +74,15 @@ class HW2:
         4. return each result list
         '''
         # HINT: Fill in the missing pieces in these comments
-        #r_graph1 = None
-        #r_graph2 = None
-        #search_algos = None
+        r_graph1 = GraphProblem('Arad', 'Bucharest', romania_map)
+        r_graph2 = GraphProblem('Iasi', 'Sibiu', romania_map)
+        search_algos = [depth_first_graph_search,iterative_deepening_search,breadth_first_graph_search,uniform_cost_search,astar_search]
 
         results1 = []
         results2 = []
-
+        for search in search_algos:
+            results1.append(search(r_graph1))
+            results2.append(search(r_graph2))
         # Do not change this return statement
         return results1, results2
 
@@ -88,8 +93,8 @@ https://github.com/aimacode/aima-python/blob/master/search.py to compare
         2. return the result from the comparison tool
         '''
         header = ['Search Algorithm', 'Iasi->Sibiu']
-        r_graph = None # Replace None with the romania graph problem (Note this sould be a 1 element list, see documentation)
-        search_algos = None # Replace None with the list of search algorithms
+        r_graph = [GraphProblem('Iasi', 'Sibiu', romania_map)] # Replace None with the romania graph problem (Note this sould be a 1 element list, see documentation)
+        search_algos = [depth_first_graph_search,iterative_deepening_search,breadth_first_graph_search,uniform_cost_search,astar_search]
         return compare_searchers(problems=r_graph, searchers=search_algos, header=header)
 
 
@@ -134,12 +139,12 @@ def main():
     print(hw2.problem_1b())
 
     print("\nProblem 2a")
-    default_solution_2a, manhattan_solution_2a = hw2.problem_2a(puzzle, astar_search,hw2.manhattan)
+    default_solution_2a, manhattan_solution_2a = hw2.problem_2a()
     print("Default Heuristic Solution: ", default_solution_2a)
     print("Manhattan Heuristic Solution: ", manhattan_solution_2a)
 
     print("\nProblem 2b")
-    default_solution_2b, manhattan_solution_2b = hw2.problem_2b( astar_search,hw2.manhattan)
+    default_solution_2b, manhattan_solution_2b = hw2.problem_2b()
     print("Default Heuristic Solution: ", default_solution_2b)
     print("Manhattan Heuristic Solution: ", manhattan_solution_2b)
 
