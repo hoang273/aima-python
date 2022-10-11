@@ -26,14 +26,15 @@ class HW2:
     def problem_1b(self):
         '''
         problem 1b
-        1. The start state of the 8 puzzle is (2, 1, 3, 4, 0, 6, 5, 7 8)
+        1. The start state of the 8 puzzle is (2, 1, 3, 4, 0, 6, 5, 7, 8)
         2. The goal state of the 8 puzzle is (1, 2, 3, 4, 0, 5, 6, 7, 8)
         3. Pass in the EightPuzzle object and use the A* search to solve.
         4. Return the solution.
         '''
-        return None # None is a placeholder, delete it and return the solution per instructions
+        eight_puzzle = EightPuzzle(initial=(2, 1, 3, 4, 0, 6, 5, 7, 8),goal=(1, 2, 3, 4, 0, 5, 6, 7, 8))
+        return astar_search(eight_puzzle).solution()
 
-    def problem_2a(self):
+    def problem_2a(self, eight_puzzle, searcher,heuristic):
         '''
         problem 2a - Example of code with question to answer in homework
         1.  A* with 8-Puzzle and different heuristics (default and manhattan)
@@ -41,21 +42,22 @@ class HW2:
             and goal.
         3.  Answer the question for this problem in your HW2_YourName.pdf
         '''
-        default_solution = None # Replace None with the solution using the default heuristic
-        manhattan_solution = None # Replace None with the solution using the manhattan heuristic
+        default_solution = searcher(eight_puzzle).solution()
+        manhattan_solution = searcher(eight_puzzle,heuristic).solution()
 
         # Do not change this return statement
         return default_solution, manhattan_solution
 
-    def problem_2b(self):
+    def problem_2b(self, searcher,heuristic):
         '''
         problem 2b - Use different start state
         1.  A* with 8-Puzzle and different heuristics (default and manhattan)
         2.  Return the solution and print the result using same start state
         3.  Answer the question for this problem in your HW2_YourName.pdf
         '''
-        default_solution = None # Replace None with the solution using the default heuristic
-        manhattan_solution = None # Replace None with the solution using the manhattan heuristic
+        eight_puzzle = EightPuzzle(initial=(1, 0, 3, 4, 6, 8, 2, 7, 5),goal=(1, 2, 3, 4, 5, 6, 7, 8, 0))
+        default_solution = searcher(eight_puzzle).solution()
+        manhattan_solution = searcher(eight_puzzle,heuristic).solution()
 
         # Do not change this return statement
         return default_solution, manhattan_solution
@@ -132,12 +134,12 @@ def main():
     print(hw2.problem_1b())
 
     print("\nProblem 2a")
-    default_solution_2a, manhattan_solution_2a = hw2.problem_2a()
+    default_solution_2a, manhattan_solution_2a = hw2.problem_2a(puzzle, astar_search,hw2.manhattan)
     print("Default Heuristic Solution: ", default_solution_2a)
     print("Manhattan Heuristic Solution: ", manhattan_solution_2a)
 
     print("\nProblem 2b")
-    default_solution_2b, manhattan_solution_2b = hw2.problem_2b()
+    default_solution_2b, manhattan_solution_2b = hw2.problem_2b( astar_search,hw2.manhattan)
     print("Default Heuristic Solution: ", default_solution_2b)
     print("Manhattan Heuristic Solution: ", manhattan_solution_2b)
 
@@ -148,6 +150,7 @@ def main():
 
     print("\nProblem 3b")
     print(hw2.problem_3b())
+    
     
 if __name__ == "__main__":
     main()
