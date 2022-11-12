@@ -7,7 +7,11 @@ class HW3:
         pass
 
     def problem_1(self):
-        problem_1_list = [ 'A==>A','(A ==> B) ==> (~ A ==> ~ B)','A | B | ~ B','A | B | ~ B','(A ==> B) ==> (B ==> C)','(A ==> C) ==> ((A & B) ==> C)'] #placeholder, populate this with your statements
+        problem_1_list = [ 'A==>A',
+        '(A ==> B) ==> (~ A ==> ~ B)',
+        'A | B | ~ B',
+        '(A ==> B) ==> (B ==> C)',
+        '(A ==> C) ==> ((A & B) ==> C)'] #placeholder, populate this with your statements
         results = [] # iteratively append the results to this
         #iterate over the problems and append the tt_true result to the list 
         for statement in problem_1_list:
@@ -34,11 +38,13 @@ class HW3:
         return result #placeholder
 
     def problem_4(self):
-        KB = None
-        alpha = None
-        #return the pl_resolution result
-        return None #placeholder
-
+        KB = PropKB() 
+        for clause in [' JSM ==> ~ PG ',' JSM | JLT ', ' JLT ==> PGC ']:
+            KB.tell(expr(clause)) #placeholder, populate this with your statements
+        alpha = expr('PG ==> PGC') #placeholder, populate this with your statements
+        #pass in your KB and alpha and return the pl_resolution result
+        result= pl_resolution(KB,alpha)
+        return result #placeholder
 
 def main():
 
